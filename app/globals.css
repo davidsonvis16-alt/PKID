@@ -1,0 +1,78 @@
+@import "tailwindcss";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/instrument-sans";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* Kenyan flag palette. Black, red and green are the three bands; white is the fimbriation.
+   Page ratio: white/paper carries the page, black anchors header, footer and the card,
+   green drives every action, red marks only what needs attention. */
+@theme {
+  --color-ke-black: #0a0a0a;
+  --color-ke-red: #c8102e;
+  --color-ke-red-soft: #fdecee;
+  --color-ke-green: #007a3d;
+  --color-ke-green-bright: #00a651;
+  --color-ke-green-soft: #e6f4ec;
+  --color-ink: #111412;
+  --color-muted: #59615c;
+  --color-line: #e2e5e1;
+  --color-paper: #f5f6f2;
+  --color-amber: #a35f00;
+  --color-amber-soft: #fdf3e2;
+  --color-sky: #0b5c8c;
+  --color-sky-soft: #e7f1f8;
+
+  --font-display: "Bricolage Grotesque Variable", "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Instrument Sans Variable", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, Menlo, monospace;
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body { @apply bg-white text-ink font-sans antialiased; font-size: 15.5px; }
+  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -0.015em; }
+  :focus-visible { outline: 3px solid var(--color-ke-green-bright); outline-offset: 2px; }
+  ::selection { background: var(--color-ke-green); color: white; }
+}
+
+@utility wrap { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+@utility eyebrow { @apply text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-muted; }
+@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-semibold text-ink transition hover:border-ink/40 disabled:cursor-not-allowed disabled:opacity-45; }
+@utility btn-green { @apply btn border-ke-green bg-ke-green text-white hover:border-ke-green hover:bg-[#00894a]; }
+@utility btn-black { @apply btn border-ke-black bg-ke-black text-white hover:bg-black hover:border-black; }
+@utility btn-red { @apply btn border-ke-red/30 text-ke-red hover:border-ke-red; }
+@utility btn-sm { @apply px-3 py-1.5 text-[0.82rem]; }
+@utility field { @apply grid gap-1.5 text-sm font-semibold; & small { @apply font-normal text-muted; } }
+@utility input { @apply w-full rounded-lg border border-line bg-white px-3 py-2.5 text-[0.95rem] font-normal outline-none transition focus:border-ke-green focus:ring-2 focus:ring-ke-green/20; }
+@utility panel { @apply rounded-2xl border border-line bg-white; }
+@utility mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+@utility ribbon { background: linear-gradient(90deg, var(--color-ke-black) 0 30%, #fff 30% 35%, var(--color-ke-red) 35% 65%, #fff 65% 70%, var(--color-ke-green) 70% 100%); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+
+/* ---------- ID card (a physical object: one fixed look) ---------- */
+.idcard { container-type: inline-size; aspect-ratio: 85.6 / 54; width: 100%; border-radius: 4.2cqw; position: relative; overflow: hidden; color: #0d1310;
+  background:
+    repeating-radial-gradient(circle at 12% 115%, transparent 0 6px, rgb(0 122 61 / 0.07) 6px 7px),
+    repeating-radial-gradient(circle at 105% -15%, transparent 0 8px, rgb(200 16 46 / 0.05) 8px 9px),
+    linear-gradient(135deg, #ffffff 0%, #f2f7f3 55%, #f7f3ef 100%);
+  box-shadow: 0 1px 0 #fff inset, 0 24px 48px -24px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(0 0 0 / 0.08); }
+.idcard .ic-top { position: absolute; inset: 0 0 auto 0; height: 15%; background: var(--color-ke-black); color: #fff; display: flex; align-items: center; justify-content: space-between; padding-inline: 4.5cqw; }
+.idcard .ic-top b { font: 700 3.1cqw/1 var(--font-display); letter-spacing: 0.14em; }
+.idcard .ic-top span { font: 600 2.3cqw/1 var(--font-mono); letter-spacing: 0.08em; opacity: 0.8; }
+.idcard .ic-rib { position: absolute; left: 0; right: 0; top: 15%; height: 1.6cqw; }
+.idcard .ic-front { position: absolute; inset: 22% 4.5cqw 5% 4.5cqw; display: grid; grid-template-columns: 26% 1fr; gap: 4cqw; }
+.idcard .ic-pic { aspect-ratio: 35/45; border-radius: 1.6cqw; overflow: hidden; background: #dfe6e1; border: 0.3cqw solid rgb(0 0 0 / 0.12); }
+.idcard .ic-pic img { width: 100%; height: 100%; object-fit: cover; }
+.idcard dl { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5cqw 3cqw; align-content: start; margin: 0; }
+.idcard dt { font: 600 1.85cqw/1.1 var(--font-sans); text-transform: uppercase; letter-spacing: 0.08em; color: #56605a; }
+.idcard dd { margin: 0; font: 700 3.1cqw/1.15 var(--font-display); overflow-wrap: anywhere; }
+.idcard .full { grid-column: 1 / -1; }
+.idcard .ic-idno dd { font: 600 4.6cqw/1 var(--font-mono); color: var(--color-ke-green); letter-spacing: 0.04em; }
+.idcard .ic-spec { position: absolute; right: 4cqw; bottom: 4cqw; font: 800 2cqw var(--font-display); letter-spacing: 0.22em; color: var(--color-ke-red); border: 0.4cqw solid var(--color-ke-red); padding: 0.6cqw 1.4cqw; transform: rotate(-6deg); opacity: 0.85; }
+.idcard .ic-back { position: absolute; inset: 0; display: grid; grid-template-rows: 1fr auto; }
+.idcard .ic-back-top { display: grid; grid-template-columns: 1fr 31%; gap: 4cqw; padding: 7cqw 4.5cqw 2cqw; }
+.idcard .ic-back-top p { font: 500 2.3cqw/1.5 var(--font-sans); color: #56605a; margin: 0; }
+.idcard .ic-back-top p b { font: 700 3.1cqw var(--font-display); color: #0d1310; display: block; margin-bottom: 1.4cqw; }
+.idcard .ic-qr svg { width: 100%; height: auto; border-radius: 1cqw; display: block; }
+.idcard .ic-mrz { background: #f3f4ef; padding: 2.4cqw 4.5cqw 3cqw; font: 500 3.55cqw/1.35 "OCR-B", var(--font-mono); letter-spacing: 0.05em; color: #111; white-space: pre; border-top: 0.3cqw solid rgb(0 0 0 / 0.06); }
